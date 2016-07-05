@@ -385,32 +385,31 @@ def process(path):
     if re.search(p, path):
         nf = Scan(path)
 
-        # for i, element in enumerate(nf.signals):
-        i = 0
-        printable = print_to_asc(i, path, nf.header)
-        channel = nf.signals.keys()[i]
+        for i, element in enumerate(nf.signals):
+            printable = print_to_asc(i, path, nf.header)
+            channel = nf.signals.keys()[i]
 
-        shape = nf.signals[channel]['forward'].shape
+            shape = nf.signals[channel]['forward'].shape
 
-        for direction in ['forward', 'backward']:
+            for direction in ['forward', 'backward']:
 
-            if direction == 'forward':
-                dest = path + '[%s_fwd].asc' % channel
-                with open(dest, 'wt') as fp:
-                    fp.write(printable)
+                if direction == 'forward':
+                    dest = path + '[%s_fwd].asc' % channel
+                    with open(dest, 'wt') as fp:
+                        fp.write(printable)
 
-                with open(dest, 'a') as fp:
-                    data_formatted = np.flipud(nf.signals[channel]['forward'].reshape((shape[1], shape[0])))
-                    np.savetxt(fp, data_formatted)
+                    with open(dest, 'a') as fp:
+                        data_formatted = np.flipud(nf.signals[channel]['forward'].reshape((shape[1], shape[0])))
+                        np.savetxt(fp, data_formatted)
 
-            if direction == 'backward':
-                dest = path + '[%s_bwd].asc' % channel
-                with open(dest, 'wt') as fp:
-                    fp.write(printable)
+                if direction == 'backward':
+                    dest = path + '[%s_bwd].asc' % channel
+                    with open(dest, 'wt') as fp:
+                        fp.write(printable)
 
-                with open(dest, 'a') as fp:
-                    data_formatted = np.flipud(nf.signals[channel]['forward'].reshape((shape[1], shape[0])))
-                    np.savetxt(fp, data_formatted)
+                    with open(dest, 'a') as fp:
+                        data_formatted = np.flipud(nf.signals[channel]['forward'].reshape((shape[1], shape[0])))
+                        np.savetxt(fp, data_formatted)
 
 
 if __name__ == "__main__":
