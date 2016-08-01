@@ -408,7 +408,7 @@ def process(path):
                         fp.write(printable)
 
                     with open(dest, 'a') as fp:
-                        data_formatted = np.flipud(nf.signals[channel]['forward'].reshape((shape[1], shape[0])))
+                        data_formatted = np.flipud(nf.signals[channel]['backward'].reshape((shape[1], shape[0])))
                         np.savetxt(fp, data_formatted)
 
 
