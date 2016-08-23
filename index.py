@@ -382,6 +382,7 @@ def process(path):
 
     if re.search(p, path):
         nf = Scan(path)
+        filename_without_ext = os.path.splitext(path)[0]
 
         for i, element in enumerate(nf.signals):
             printable = print_to_asc(i, path, nf.header)
@@ -392,7 +393,7 @@ def process(path):
             for direction in ['forward', 'backward']:
 
                 if direction == 'forward':
-                    dest = path + '[%s_fwd].asc' % channel
+                    dest = filename_without_ext + '[%s_fwd].txt' % channel
                     with open(dest, 'wt') as fp:
                         fp.write(printable)
 
@@ -401,7 +402,7 @@ def process(path):
                         np.savetxt(fp, data_formatted)
 
                 if direction == 'backward':
-                    dest = path + '[%s_bwd].asc' % channel
+                    dest = filename_without_ext + '[%s_bwd].txt' % channel
                     with open(dest, 'wt') as fp:
                         fp.write(printable)
 
