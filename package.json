@@ -1,0 +1,14 @@
+{
+  "main": "index.py",
+  "engine": "python3",
+  "name": "rinobot-plugin-parse-sxm",
+  "description": "Parses .sxm files",
+  "version": "0.0.2",
+  "repository": "https://github.com/rinocloud/rinobot-plugin-parse-sxm.git",
+  "author": "eoin murray",
+  "license": "MIT",
+  "keywords": [
+    "rinobot",
+    "rinocloud"
+  ]
+}

@@ -4,9 +4,7 @@ import numpy as np
 
 _end_tags = dict(grid=':HEADER_END:', scan='SCANIT_END', spec='[DATA]')
 
-
 class NanonisFile(object):
-
     """
     Base class for Nanonis data files (grid, scan, point spectroscopy).
 
@@ -301,9 +299,9 @@ def _parse_scan_header_table(table_list):
     keys = table_processed[0]
     values = table_processed[1:]
 
-    zip_vals = zip(*values)
+    zip_vals = list(zip(*values))
 
-    return dict(zip(keys, zip_vals))
+    return dict(list(zip(keys, zip_vals)))
 
 
 def _is_valid_file(fname, ext):
@@ -387,7 +385,7 @@ def process(path):
 
         for i, element in enumerate(nf.signals):
             printable = print_to_asc(i, path, nf.header)
-            channel = nf.signals.keys()[i]
+            channel = list(nf.signals.keys())[i]
 
             shape = nf.signals[channel]['forward'].shape
 
@@ -398,7 +396,7 @@ def process(path):
                     with open(dest, 'wt') as fp:
                         fp.write(printable)
 
-                    with open(dest, 'a') as fp:
+                    with open(dest, 'ab') as fp:
                         data_formatted = np.flipud(nf.signals[channel]['forward'].reshape((shape[1], shape[0])))
                         np.savetxt(fp, data_formatted)
 
@@ -407,7 +405,7 @@ def process(path):
                     with open(dest, 'wt') as fp:
                         fp.write(printable)
 
-                    with open(dest, 'a') as fp:
+                    with open(dest, 'ab') as fp:
                         data_formatted = np.flipud(nf.signals[channel]['backward'].reshape((shape[1], shape[0])))
                         np.savetxt(fp, data_formatted)
 
