@@ -3,7 +3,7 @@
   "engine": "python3",
   "name": "rinobot-plugin-parse-sxm",
   "description": "Parses .sxm files",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "repository": "https://github.com/rinocloud/rinobot-plugin-parse-sxm.git",
   "author": "eoin murray",
   "license": "MIT",
