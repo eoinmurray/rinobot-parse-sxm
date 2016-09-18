@@ -7,6 +7,9 @@
   "repository": "https://github.com/rinocloud/rinobot-plugin-parse-sxm.git",
   "author": "eoin murray",
   "license": "MIT",
+  "scripts": {
+    "postinstall": "pip install rinobot-plugin --upgrade"
+  },
   "keywords": [
     "rinobot",
     "rinocloud"

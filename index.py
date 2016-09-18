@@ -1,3 +1,4 @@
+import rinobot_plugin as bot
 import re
 import os
 import numpy as np
@@ -377,15 +378,15 @@ def print_to_asc(index, original_path, header):
     return printable
 
 
-def process(path):
+def main():
+    filepath = bot.filepath()
     p = re.compile(r'.*.sxm')
 
-    if re.search(p, path):
-        nf = Scan(path)
-        filename_without_ext = os.path.splitext(path)[0]
+    if re.search(p, filepath):
+        nf = Scan(filepath)
 
         for i, element in enumerate(nf.signals):
-            printable = print_to_asc(i, path, nf.header)
+            printable = print_to_asc(i, filepath, nf.header)
             channel = list(nf.signals.keys())[i]
 
             shape = nf.signals[channel]['forward'].shape
@@ -393,24 +394,25 @@ def process(path):
             for direction in ['forward', 'backward']:
 
                 if direction == 'forward':
-                    dest = filename_without_ext + '[%s_fwd].txt' % channel
-                    with open(dest, 'wt') as fp:
+                    outname = bot.no_extension() + '[%s_fwd].txt' % channel
+                    outpath = bot.output_filepath(outname)
+                    with open(outpath, 'wt') as fp:
                         fp.write(printable)
 
-                    with open(dest, 'ab') as fp:
+                    with open(outpath, 'ab') as fp:
                         data_formatted = np.flipud(nf.signals[channel]['forward'].reshape((shape[1], shape[0])))
                         np.savetxt(fp, data_formatted)
 
                 if direction == 'backward':
-                    dest = filename_without_ext + '[%s_bwd].txt' % channel
-                    with open(dest, 'wt') as fp:
+                    outname = bot.no_extension() + '[%s_bwd].txt' % channel
+                    outpath = bot.output_filepath(outname)
+                    with open(outpath, 'wt') as fp:
                         fp.write(printable)
 
-                    with open(dest, 'ab') as fp:
+                    with open(outpath, 'ab') as fp:
                         data_formatted = np.flipud(nf.signals[channel]['backward'].reshape((shape[1], shape[0])))
                         np.savetxt(fp, data_formatted)
 
 
 if __name__ == "__main__":
-    import sys
-    process(sys.argv[1])
+    main()
